@@ -3,7 +3,7 @@ function desktop_theme_status_form($text = '', $in_reply_to_id = NULL, $is_deskt
 	if (user_is_authenticated()) {
 		$fixedtags = ((setting_fetch('fixedtago', 'no') == "yes") && ($text == '')) ? " #".setting_fetch('fixedtagc') : null;
 		$output = '<form method="post" action="'.BASE_URL.'update"><textarea id="status" name="status" rows="3" style="width:100%; max-width: 400px;">'.$text.$fixedtags.'</textarea>';
-		if (setting_fetch('buttongeo') == 'yes') {
+		if (setting_fetch('buttongeo','yes') == 'yes') {
 			$output .= '
 <br /><span id="geo" style="display: inline;"><input onclick="goGeo()" type="checkbox" id="geoloc" name="location" /> <label for="geoloc" id="lblGeo"></label></span>
 <script type="text/javascript">

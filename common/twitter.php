@@ -215,7 +215,7 @@ function twitter_upload_page($query) {
 		$status = $_POST['message'];
 		
 		$geo = 'N';
-		if (setting_fetch('buttongeo') == 'yes') {
+		if (setting_fetch('buttongeo','yes') == 'yes') {
 			list($lat, $long) = explode(',', $_POST['location']);
 			if (is_numeric($lat) && is_numeric($long)) 
 				$geo = 'Y';
@@ -260,7 +260,7 @@ function twitter_upload_page($query) {
 						".__("Content: ")."<br />
 						<textarea name='message' style='width:90%; max-width: 400px;' rows='3' id='message'>" . $_POST['message'] . "</textarea><br>
 			";
-	if (setting_fetch('buttongeo') == 'yes') {
+	if (setting_fetch('buttongeo','yes') == 'yes') {
 		$content .= '
 <span id="geo" style="display: inline;"><input onclick="goGeo()" type="checkbox" id="geoloc" name="location" /> <label for="geoloc" id="lblGeo"></label></span><br />
 <script type="text/javascript">
@@ -709,7 +709,7 @@ function twitter_update() {
 		$post_data = array('status' => $status);
 		$in_reply_to_id = (string) $_POST['in_reply_to_id'];
 		if (is_numeric($in_reply_to_id)) $post_data['in_reply_to_status_id'] = $in_reply_to_id;
-		if (setting_fetch('buttongeo') == 'yes') {
+		if (setting_fetch('buttongeo','yes') == 'yes') {
 			// Geolocation parameters
 			list($lat, $long) = explode(',', $_POST['location']);
 			$geo = 'N';
@@ -988,7 +988,7 @@ function theme_status_form($text = '', $in_reply_to_id = NULL) {
 	if (user_is_authenticated()) {
 		$fixedtags = ((setting_fetch('fixedtago', 'no') == "yes") && ($text == '')) ? " #".setting_fetch('fixedtagc') : null;
 		$output = '<form method="post" action="'.BASE_URL.'update"><textarea id="status" name="status" rows="3" style="width:100%; max-width: 400px;">'.$text.$fixedtags.'</textarea>';
-		if (setting_fetch('buttongeo') == 'yes') {
+                if (setting_fetch('buttongeo','yes') == 'yes') {
 			$output .= '
 <br /><span id="geo" style="display: inline;"><input onclick="goGeo()" type="checkbox" id="geoloc" name="location" /> <label for="geoloc" id="lblGeo"></label></span>
 <script type="text/javascript">
@@ -1358,7 +1358,7 @@ function theme_timeline($feed) {
 			$replyto = null;
 		}
 
-		if (setting_fetch('dispnick', 'yes') == 'yes') {
+		if (setting_fetch('dispnick', 'no') == 'yes') {
 			$showname = $status->from->name;
 		} else {
 			$showname = $status->from->screen_name;
@@ -1374,7 +1374,7 @@ function theme_timeline($feed) {
 		$html .= " $source $replyto</small>";
 
 		if ($status->retweeted_by) {
-			if (setting_fetch('dispnick', 'yes') == 'yes') {
+			if (setting_fetch('dispnick', 'no') == 'yes') {
 				$showrtname = $status->retweeted_by->user->name;
 			} else {
 				$showrtname = $status->retweeted_by->user->screen_name;
